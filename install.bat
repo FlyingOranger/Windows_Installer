@@ -81,5 +81,3 @@ echo.
 
 start /WAIT /MIN "" node dlapp.js install
 start node RedditCanFly/start_scripts/windows_start.js
-
-PAUSE
