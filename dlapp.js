@@ -49,6 +49,7 @@ function checkForNewRelease( repoName ){
             if ( data.id !== releaseInfo[repoName]){
                 releaseInfo[repoName] = data.id;
                 fs.writeFileSync( path.join( __dirname, "releaseInfo.json"), JSON.stringify( releaseInfo ));
+				deleteFolder( path.join (__dirname, repoName));
                 downloader(data.zipball_url, longFileName => {
                     longFileName = path.basename( longFileName, ".zip");
                     var folderName = "RedditCanFly-" + repoName + "-" + longFileName.substr( longFileName.length - 7, longFileName.length);
@@ -107,5 +108,19 @@ function unzip(filename){
         exec("cscript //B w_unzip.vbs " + filename);
     
 }
+
+function deleteFolder(p) {
+  if( fs.existsSync(p) ) {
+    fs.readdirSync(p).forEach(function(file,index){
+      var curPath = path.join(p, file);
+      if(fs.lstatSync(curPath).isDirectory()) { // recurse
+        deleteFolder(curPath);
+      } else { // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(p);
+  }
+};
 
 
