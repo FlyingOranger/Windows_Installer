@@ -15,7 +15,20 @@ MKDIR %baseDir%
 echo Copying Files...
 echo ________________
 echo.
-echo f | xcopy /y dljava.js %fileName%
+set fileName=dljava.js
+echo f | xcopy /y %fileName% %baseDir%\%fileName%
+
+set fileName=dlapp.js
+echo f | xcopy /y %fileName% %baseDir%\%fileName%
+
+set fileName=w_start.bat
+echo f | xcopy /y %fileName% %baseDir%\%fileName%
+
+set fileName=w_unzip.vbs
+echo f | xcopy /y %fileName% %baseDir%\%fileName%
+
+set fileName=license.txt
+echo f | xcopy /y %fileName% %baseDir%\%fileName%
 
 reg Query "HKLM\Hardware\Description\System\CentralProcessor\0" | find /i "x86" > NUL && set OS=x86 || set OS=x64
 
@@ -35,16 +48,15 @@ start /WAIT /MIN dlnode.bat %nodeDownloadURL% "%nodeFilePath%"
 
 cd "%baseDir%"
 
-echo.
-echo Node.js downloaded. 
-echo Checking if Java is installed
-echo _________________________________
-echo.
-
 where java >nul 2>nul
 if %errorlevel%==1 (
+echo.
+echo ______________________
+echo.
 echo Java is not installed. 
 echo Downloading Java
+echo.
+echo _______________________
 start /WAIT /MIN "" node dljava.js javainstaller.exe %OS%
 start /WAIT javainstaller
 )
@@ -53,6 +65,7 @@ where java >nul 2>nul
 if %errorlevel%==1 (
 echo.
 echo _______________________________________________
+echo.
 echo ERROR! Still could not find Java.
 echo Please re-run this installation of RedditCanFly 
 echo and fully install Java.
@@ -62,13 +75,11 @@ exit 1
 
 echo ______________________________________
 echo.
-echo Downloading the Reddit Can Fly updater
+echo Downloading Reddit Can Fly
 echo ______________________________________
 echo.
 
-start /WAIT /MIN "" node dlapp.js downloader.zip https://github.com/RedditCanFly/Updater/archive/master.zip
-cscript windows_unzip.vbs downloader.zip
-del downloader.zip
-rename RedditCanFly-master Updater
+start /WAIT /MIN "" node dlapp.js install
+start node RedditCanFly/start_scripts/windows_start.js
 
 PAUSE
