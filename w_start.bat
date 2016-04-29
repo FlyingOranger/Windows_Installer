@@ -1,2 +1,2 @@
 node dlapp.js
-node RedditCanFly/start_scripts/winodws_start.js
+node RedditCanFly/start_scripts/windows_start.js
