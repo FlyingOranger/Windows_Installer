@@ -9,8 +9,6 @@ var protocol = {
     https: require('https')
 };
 
-console.log("IN HERE");
-
 var ws = fs.createWriteStream(process.argv[2]);
 
 var startURL;
@@ -24,7 +22,6 @@ function recurringRequest( newLocation ){
     
     var newPath = URL.parse(newLocation);
     
-    //console.log("Our new path", newPath);
     var url_options = {
 		hostname: newPath.host,
 		path: newPath.path,
@@ -36,8 +33,6 @@ function recurringRequest( newLocation ){
     
     protocol[newPath.protocol.substr(0, newPath.protocol.length -1)].request(url_options, res => {
         
-        //console.log(res.statusCode);
-        //console.log(res.headers);
         if (res.statusCode == 302){
             
             recurringRequest( res.headers.location);

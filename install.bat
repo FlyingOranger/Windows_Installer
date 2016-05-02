@@ -21,7 +21,10 @@ echo f | xcopy /y %fileName% %baseDir%\%fileName%
 set fileName=dlapp.js
 echo f | xcopy /y %fileName% %baseDir%\%fileName%
 
-set fileName=w_start.bat
+set fileName=linker.bat
+echo f | xcopy /y %fileName% %baseDir%\%fileName%
+
+set fileName=start.js
 echo f | xcopy /y %fileName% %baseDir%\%fileName%
 
 set fileName=w_unzip.vbs
@@ -43,7 +46,7 @@ echo Downloading local version of Node.js
 echo Please wait...
 echo _____________________________________
 echo.
-start /WAIT /MIN dlnode.bat %nodeDownloadURL% "%nodeFilePath%"
+start /WAIT dlnode.bat %nodeDownloadURL% "%nodeFilePath%"
 )
 
 cd "%baseDir%"
@@ -79,5 +82,25 @@ echo Downloading Reddit Can Fly
 echo ______________________________________
 echo.
 
-start /WAIT /MIN "" node dlapp.js install
-start node RedditCanFly/start_scripts/windows_start.js
+start /MIN "" node start.js install
+
+echo ______________________________________
+echo.
+echo Creating start menu items
+echo ______________________________________
+echo.
+
+if exist "%appdata%\Microsoft\Windows\Start Menu\Programs" (
+
+    if NOT exist "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly" (
+        mkdir "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly"
+        
+        start "" /wait /min linker "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly\Reddit Can Fly.lnk" "%nodeFilePath%" "%baseDir%\start.js"
+
+
+        start "" /wait /min linker "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly\uninstall.lnk" "%nodeFilePath%" "%baseDir%\uninstall.js"
+
+       
+        
+    )
+)

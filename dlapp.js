@@ -4,29 +4,51 @@ var fs = require('fs'),
     exec = require('child_process').execSync,
 	https = require('https');
 
-// load releaseInfo if it exists
-var releaseInfo;
-try {
-    releaseInfo = require('./releaseInfo');
-} catch (e){ releaseInfo = {}; }
 
-// need to access them dynamically due to rerouting
-var protocol = {
-    http: require('http'),
-    https: require('https')
+module.exports = cb => {
+    
+    var installCB = cb;
+
+    if (process.argv[2] === "install"){
+        releaseInfo = {};
+
+        installCB = () => {
+
+            // install new crawlers only if folder doesn't already exist
+            if (!fs.existsSync( path.join( __dirname, "Crawlers"))){
+                
+                downloader('https://github.com/RedditCanFly/Crawlers/archive/master.zip', () => {
+                    fs.renameSync( path.join( __dirname, "Crawlers-master" ), path.join( __dirname, "Crawlers"));
+
+                    // we're going to initially say that we are launching on startup
+                    var startupManager = require("./RedditCanFly/lib/startup_manager");
+                    startupManager.setState(true);
+                
+
+                    cb();
+                });
+            } else {
+                
+                // we're going to initially say that we are launching on startup
+                var startupManager = require("./RedditCanFly/lib/startup_manager");
+                startupManager.setState(true);
+                
+                cb();
+                
+            }
+        };
+    } else 
+        releaseInfo = require('./releaseInfo');
+
+
+    checkForNewRelease("RedditCanFly", () => checkForNewRelease("JavaGUI", installCB ));
+    
 };
 
-if (process.argv[2] === "install"){
-    downloader('https://github.com/RedditCanFly/Crawlers/archive/master.zip', () => {
-        fs.renameSync( path.join( __dirname, "Crawlers-master" ), path.join( __dirname, "Crawlers"));
-    })
-}
 
-checkForNewRelease("RedditCanFly");
-checkForNewRelease("JavaGUI");
-
-
-function checkForNewRelease( repoName ){
+// helper functions
+// simple https request to get the last release for the specified repo
+function checkForNewRelease( repoName, next ){
     
     var url_options = {
         hostname: "api.github.com",
@@ -51,20 +73,31 @@ function checkForNewRelease( repoName ){
                 fs.writeFileSync( path.join( __dirname, "releaseInfo.json"), JSON.stringify( releaseInfo ));
 				deleteFolder( path.join (__dirname, repoName));
                 downloader(data.zipball_url, longFileName => {
+                    
                     longFileName = path.basename( longFileName, ".zip");
                     var folderName = "RedditCanFly-" + repoName + "-" + longFileName.substr( longFileName.length - 7, longFileName.length);
                     fs.renameSync( path.join( __dirname, folderName ), path.join( __dirname, repoName));
+                    
+                    next();
                 });
             }
+            
+            next();
         });
 
     }).end();
     
 }
 
-
+// downloads the repo at the URL. handles redirets
 function downloader( downloadUrl, cb ){
 
+    // need to access them dynamically due to rerouting
+    var protocol = {
+        http: require('http'),
+        https: require('https')
+    };
+    
     var newPath = URL.parse( downloadUrl );
 
     //console.log("Our new path", newPath);
@@ -102,6 +135,7 @@ function downloader( downloadUrl, cb ){
     }).end();    
 }
 
+// unzips the downloaded repo, depending on operating system
 function unzip(filename){
 
     if (process.platform === "win32")
@@ -109,6 +143,7 @@ function unzip(filename){
     
 }
 
+// deletes the previous folders if there is an update
 function deleteFolder(p) {
   if( fs.existsSync(p) ) {
     fs.readdirSync(p).forEach(function(file,index){
@@ -122,5 +157,4 @@ function deleteFolder(p) {
     fs.rmdirSync(p);
   }
 };
-
 
