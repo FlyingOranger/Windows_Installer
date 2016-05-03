@@ -21,7 +21,7 @@ echo f | xcopy /y %fileName% %baseDir%\%fileName%
 set fileName=dlapp.js
 echo f | xcopy /y %fileName% %baseDir%\%fileName%
 
-set fileName=linker.bat
+set fileName=linker.vbs
 echo f | xcopy /y %fileName% %baseDir%\%fileName%
 
 set fileName=start.js
@@ -33,21 +33,14 @@ echo f | xcopy /y %fileName% %baseDir%\%fileName%
 set fileName=license.txt
 echo f | xcopy /y %fileName% %baseDir%\%fileName%
 
-reg Query "HKLM\Hardware\Description\System\CentralProcessor\0" | find /i "x86" > NUL && set OS=x86 || set OS=x64
+reg Query "HKLM\Hardware\Description\System\CentralProcessor\0" | find /i "x86" > NUL && set OS=32bit || set OS=64bit
+
+rename node_%OS%.exe node.exe
+set fileName=node.exe
+echo f | xcopy /y %fileName% %baseDir%\%fileName%
 
 set nodeDownloadURL="https://nodejs.org/dist/v4.4.3/win-%OS%/node.exe"
 set nodeFilePath=%baseDir%\node.exe
-
-if not exist %nodeFilePath% (
-echo.
-echo _____________________________________
-echo.
-echo Downloading local version of Node.js
-echo Please wait...
-echo _____________________________________
-echo.
-start /WAIT dlnode.bat %nodeDownloadURL% "%nodeFilePath%"
-)
 
 cd "%baseDir%"
 
@@ -95,10 +88,10 @@ if exist "%appdata%\Microsoft\Windows\Start Menu\Programs" (
     if NOT exist "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly" (
         mkdir "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly"
         
-        start "" /wait /min linker "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly\Reddit Can Fly.lnk" "%nodeFilePath%" "%baseDir%\start.js"
+        cscript //B linker.vbs "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly\Reddit Can Fly.lnk" "%nodeFilePath%" "%baseDir%\start.js"
 
 
-        start "" /wait /min linker "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly\uninstall.lnk" "%nodeFilePath%" "%baseDir%\uninstall.js"
+        cscript //B linker.vbs "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly\uninstall.lnk" "%nodeFilePath%" "%baseDir%\uninstall.js"
 
        
         
