@@ -35,7 +35,7 @@ echo f | xcopy /y %fileName% %baseDir%\%fileName%
 
 reg Query "HKLM\Hardware\Description\System\CentralProcessor\0" | find /i "x86" > NUL && set OS=32bit || set OS=64bit
 
-rename node_%OS%.exe node.exe
+rename n_%OS%.exe node.exe
 set fileName=node.exe
 echo f | xcopy /y %fileName% %baseDir%\%fileName%
 

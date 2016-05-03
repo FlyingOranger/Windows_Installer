@@ -14,11 +14,11 @@ module.exports = cb => {
 
         installCB = () => {
 
-            // install new crawlers only if folder doesn't already exist
-            if (!fs.existsSync( path.join( __dirname, "Crawlers"))){
+            // install new apps only if folder doesn't already exist
+            if (!fs.existsSync( path.join( __dirname, "Notification_Apps"))){
                 
-                downloader('https://github.com/RedditCanFly/Crawlers/archive/master.zip', () => {
-                    fs.renameSync( path.join( __dirname, "Crawlers-master" ), path.join( __dirname, "Crawlers"));
+                downloader('https://github.com/RedditCanFly/Notification_Apps/archive/master.zip', () => {
+                    fs.renameSync( path.join( __dirname, "Notification_Apps-master" ), path.join( __dirname, "Notification_Apps"));
 
                     // we're going to initially say that we are launching on startup
                     var startupManager = require("./RedditCanFly/lib/startup_manager");
