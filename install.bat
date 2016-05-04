@@ -6,7 +6,7 @@ echo REDDIT CAN FLY!
 echo _______________
 echo.
 
-set baseDir=%localappdata%\RedditCanFly
+set baseDir=%localappdata%\FlyingOranger
 
 if not exist %baseDir% (
 MKDIR %baseDir%
@@ -66,7 +66,7 @@ echo.
 echo _______________________________________________
 echo.
 echo ERROR! Still could not find Java.
-echo Please re-run this installation of RedditCanFly 
+echo Please re-run this installation of Flying Oranger 
 echo and fully install Java.
 echo _______________________________________________
 exit 1
@@ -74,7 +74,7 @@ exit 1
 
 echo ______________________________________
 echo.
-echo Downloading Reddit Can Fly
+echo Downloading Flying Oranger
 echo ______________________________________
 echo.
 
@@ -88,13 +88,13 @@ echo.
 
 if exist "%appdata%\Microsoft\Windows\Start Menu\Programs" (
 
-    if NOT exist "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly" (
-        mkdir "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly"
+    if NOT exist "%appdata%\Microsoft\Windows\Start Menu\Programs\Flying Oranger" (
+        mkdir "%appdata%\Microsoft\Windows\Start Menu\Programs\Flying Oranger"
         
-        cscript //B linker.vbs "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly\Reddit Can Fly.lnk" "%nodeFilePath%" "%baseDir%\start.js" "%baseDir%\w_icon.ico"
+        cscript //B linker.vbs "%appdata%\Microsoft\Windows\Start Menu\Programs\Flying Oranger\Flying Oranger.lnk" "%nodeFilePath%" "%baseDir%\start.js" "%baseDir%\w_icon.ico"
 
 
-        cscript //B linker.vbs "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly\uninstall.lnk" "%nodeFilePath%" "%baseDir%\uninstall.js" "%baseDir%\w_icon.ico"
+        cscript //B linker.vbs "%appdata%\Microsoft\Windows\Start Menu\Programs\Flying Oranger\uninstall.lnk" "%nodeFilePath%" "%baseDir%\uninstall.js" "%baseDir%\w_icon.ico"
 
        
         

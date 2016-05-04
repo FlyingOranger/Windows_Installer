@@ -17,11 +17,11 @@ module.exports = cb => {
             // install new apps only if folder doesn't already exist
             if (!fs.existsSync( path.join( __dirname, "Notification_Apps"))){
                 
-                downloader('https://github.com/RedditCanFly/Notification_Apps/archive/master.zip', () => {
+                downloader('https://github.com/FlyingOranger/Notification_Apps/archive/master.zip', () => {
                     fs.renameSync( path.join( __dirname, "Notification_Apps-master" ), path.join( __dirname, "Notification_Apps"));
 
                     // we're going to initially say that we are launching on startup
-                    var startupManager = require("./RedditCanFly/lib/startup_manager");
+                    var startupManager = require("./FlyingOranger/lib/startup_manager");
                     startupManager.setState(true);
                 
 
@@ -30,7 +30,7 @@ module.exports = cb => {
             } else {
                 
                 // we're going to initially say that we are launching on startup
-                var startupManager = require("./RedditCanFly/lib/startup_manager");
+                var startupManager = require("./FlyingOranger/lib/startup_manager");
                 startupManager.setState(true);
                 
                 cb();
@@ -41,7 +41,7 @@ module.exports = cb => {
         releaseInfo = require('./releaseInfo');
 
 
-    checkForNewRelease("RedditCanFly", () => checkForNewRelease("JavaGUI", installCB ));
+    checkForNewRelease("FlyingOranger", () => checkForNewRelease("JavaGUI", installCB ));
     
 };
 
@@ -52,10 +52,10 @@ function checkForNewRelease( repoName, next ){
     
     var url_options = {
         hostname: "api.github.com",
-        path: "/repos/RedditCanFly/" + repoName + "/releases/latest",
+        path: "/repos/FlyingOranger/" + repoName + "/releases/latest",
         method: "GET",
         headers: {
-            "user-agent": "RedditCanFly updater checking latest release"
+            "user-agent": "FlyingOranger updater checking latest release"
         }
     };
 
@@ -75,7 +75,7 @@ function checkForNewRelease( repoName, next ){
                 downloader(data.zipball_url, longFileName => {
                     
                     longFileName = path.basename( longFileName, ".zip");
-                    var folderName = "RedditCanFly-" + repoName + "-" + longFileName.substr( longFileName.length - 7, longFileName.length);
+                    var folderName = "FlyingOranger-" + repoName + "-" + longFileName.substr( longFileName.length - 7, longFileName.length);
                     fs.renameSync( path.join( __dirname, folderName ), path.join( __dirname, repoName));
                     
                     next();
@@ -106,7 +106,7 @@ function downloader( downloadUrl, cb ){
         path: newPath.path,
         method: "GET",
         headers: {
-            "user-agent": "RedditCanFly checking for latest release"
+            "user-agent": "FlyingOranger checking for latest release"
         }
     };
 

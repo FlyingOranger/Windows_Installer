@@ -1,9 +1,9 @@
-In order to use Reddit Can Fly, you must meet the following requirements:
+In order to use Flying Oranger, you must meet the following requirements:
 
 - Be awesome
 - Be super awesome
 
-Reddit Can Fly is Open Source and under the MIT License.
+Flying Oranger is Open Source and under the MIT License.
 
 The MIT License (MIT)
 Copyright (c) 2016 Joel Barna

@@ -5,7 +5,7 @@ var spawn = require('child_process').spawn,
 
 updater( () => {
 
-    var indexPath = path.join( __dirname, "RedditCanFly", "index.js");
+    var indexPath = path.join( __dirname, "FlyingOranger", "index.js");
     var logPath = path.join( __dirname, "log.txt");
 
     var out = fs.openSync(logPath, 'a');
