@@ -24,6 +24,9 @@ echo f | xcopy /y %fileName% %baseDir%\%fileName%
 set fileName=linker.vbs
 echo f | xcopy /y %fileName% %baseDir%\%fileName%
 
+set fileName=w_icon.ico
+echo f | xcopy /y %fileName% %baseDir%\%fileName%
+
 set fileName=start.js
 echo f | xcopy /y %fileName% %baseDir%\%fileName%
 
@@ -75,7 +78,7 @@ echo Downloading Reddit Can Fly
 echo ______________________________________
 echo.
 
-start /MIN "" node start.js install
+start /MIN /WAIT "" node start.js install
 
 echo ______________________________________
 echo.
@@ -88,10 +91,10 @@ if exist "%appdata%\Microsoft\Windows\Start Menu\Programs" (
     if NOT exist "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly" (
         mkdir "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly"
         
-        cscript //B linker.vbs "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly\Reddit Can Fly.lnk" "%nodeFilePath%" "%baseDir%\start.js"
+        cscript //B linker.vbs "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly\Reddit Can Fly.lnk" "%nodeFilePath%" "%baseDir%\start.js" "%baseDir%\w_icon.ico"
 
 
-        cscript //B linker.vbs "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly\uninstall.lnk" "%nodeFilePath%" "%baseDir%\uninstall.js"
+        cscript //B linker.vbs "%appdata%\Microsoft\Windows\Start Menu\Programs\Reddit Can Fly\uninstall.lnk" "%nodeFilePath%" "%baseDir%\uninstall.js" "%baseDir%\w_icon.ico"
 
        
         
