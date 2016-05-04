@@ -81,8 +81,7 @@ function checkForNewRelease( repoName, next ){
                     next();
                 });
             }
-            
-            next();
+            else next();
         });
 
     }).end();
@@ -112,7 +111,7 @@ function downloader( downloadUrl, cb ){
 
     protocol[newPath.protocol.substr(0, newPath.protocol.length -1)].request(url_options, res => {
 
-        console.log(res.statusCode);
+        //console.log(res.statusCode);
         //console.log(res.headers);
         if (res.statusCode == 302){
 
