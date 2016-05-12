@@ -37,6 +37,7 @@ function recurringRequest( newLocation ){
 		}
 	};
     
+    // substr to get rid of the colon at the end of http: for example
     protocol[newPath.protocol.substr(0, newPath.protocol.length -1)].request(url_options, res => {
         
         if (res.statusCode == 302){
