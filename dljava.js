@@ -1,7 +1,13 @@
 var fs = require('fs'),
 	URL = require('url');
 
-// TODO, download the latest version of java. I'm not sure how to figure that out just yet
+/* This script downloads Java. 
+* It handles the multiple redirects that oracle throws at you
+* and it also sets our cookie to have accepted the license agreement 
+*/
+
+/* Currently it only supports windows... I just need to update the URL and probably make 
+* the OS to download for part of the command line arguments */
 
 // need to access them dynamically due to rerouting
 var protocol = {

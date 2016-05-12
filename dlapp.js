@@ -4,6 +4,17 @@ var fs = require('fs'),
     exec = require('child_process').execSync,
 	https = require('https');
 
+/* This script makes https github api requests to get the latest
+* release of both 
+* FlyingOranger/FlyingOranger
+* FlyingOranger/JavaGUI
+*
+* If there is a new release, it delets the old folders,
+* it downloads the new release as a zip file
+* And then unzips it.
+*
+* If we're installing, then we also download the FlyingOranger/notification_apps repository
+*/
 
 module.exports = cb => {
     

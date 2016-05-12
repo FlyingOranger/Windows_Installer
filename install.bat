@@ -24,6 +24,9 @@ echo f | xcopy /y %fileName% %baseDir%\%fileName%
 set fileName=linker.vbs
 echo f | xcopy /y %fileName% %baseDir%\%fileName%
 
+set fileName=uninstall.bat
+echo f | xcopy /y %fileName% %baseDir%\%fileName%
+
 set fileName=w_icon.ico
 echo f | xcopy /y %fileName% %baseDir%\%fileName%
 
@@ -38,11 +41,8 @@ echo f | xcopy /y %fileName% %baseDir%\%fileName%
 
 reg Query "HKLM\Hardware\Description\System\CentralProcessor\0" | find /i "x86" > NUL && set OS=32bit || set OS=64bit
 
-rename n_%OS%.exe node.exe
-set fileName=node.exe
-echo f | xcopy /y %fileName% %baseDir%\%fileName%
-
-set nodeDownloadURL="https://nodejs.org/dist/v4.4.3/win-%OS%/node.exe"
+set fileName=n_%OS%.exe
+echo f | xcopy /y %fileName% %baseDir%\node.exe
 set nodeFilePath=%baseDir%\node.exe
 
 cd "%baseDir%"
@@ -94,7 +94,7 @@ if exist "%appdata%\Microsoft\Windows\Start Menu\Programs" (
         cscript //B linker.vbs "%appdata%\Microsoft\Windows\Start Menu\Programs\Flying Oranger\Flying Oranger.lnk" "%nodeFilePath%" "%baseDir%\start.js" "%baseDir%\w_icon.ico"
 
 
-        cscript //B linker.vbs "%appdata%\Microsoft\Windows\Start Menu\Programs\Flying Oranger\uninstall.lnk" "%nodeFilePath%" "%baseDir%\uninstall.js" "%baseDir%\w_icon.ico"
+        cscript //B linker.vbs "%appdata%\Microsoft\Windows\Start Menu\Programs\Flying Oranger\uninstall.lnk" "%baseDir%\uninstall.bat" argfiller "%baseDir%\w_icon.ico"
 
        
         
