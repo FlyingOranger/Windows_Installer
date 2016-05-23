@@ -140,7 +140,6 @@ function downloader( downloadUrl, cb ){
     
     var newPath = URL.parse( downloadUrl );
 
-    //console.log("Our new path", newPath);
     var url_options = {
         hostname: newPath.host,
         path: newPath.path,
